@@ -1,0 +1,29 @@
+[tool.coverage.run]
+include = ["api_client_base/*"]
+omit = ["*/tests/*", "*/test_*.py"]
+
+[tool.coverage.report]
+show_missing = true
+[tool.poetry]
+name = "api_client_base"
+version = "0.1.0"
+description = "An extendable API consumer Base class"
+authors = ["dbrierley <david.matthew.brierley@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.32.3"
+pydantic = "^2.8.2"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.2"
+pytest-cov = "^5.0.0"
+flake8 = "^7.1.1"
+black = "^24.8.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

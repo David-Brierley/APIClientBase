@@ -1,0 +1,16 @@
+.env
+__pycache__
+*.pyc
+.pytest_cache/
+coverage.xml
+htmlcov/
+dist/
+build/
+*.egg-info/
+*.egg
+.coverage
+lib/
+bin/
+dist/
+lib64/
+.env
