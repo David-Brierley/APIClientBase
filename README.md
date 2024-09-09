@@ -1,7 +1,8 @@
 [![codecov](https://codecov.io/gh/David-Brierley/APIClientBase/graph/badge.svg?token=G5X3AEA52D)](https://codecov.io/gh/David-Brierley/APIClientBase)
 ![Lint and Format](https://github.com/David-Brierley/APIClientBase/actions/workflows/lint.yml/badge.svg)
 
-![image](https://github.com/user-attachments/assets/59fe1fd9-1534-4f0e-95bf-ac13d51403b7)
+![image](https://github.com/user-attachments/assets/497912b1-0e80-4102-95cd-ff80a4685816)
+
 
 
 # API Client Base 
