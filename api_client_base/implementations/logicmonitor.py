@@ -155,12 +155,31 @@ class LogicMonitorClient(ApiConsumer, OffsetPaginator):
         """
         self.headers.update(headers)
 
-    def _calculate_epoch(self) -> int:
+    def count(self, path: str, **kwargs) -> int:
+        """
+        Count the total number of items in the response.
+        runs a minimal get with fields=id and size=1 to get the total count of items.
+        all other params are preserved.
+
+        Args:
+            path (str): The API endpoint path.
+            kwargs: Additional arguments for the GET request.
+
+        Returns:
+            int: The total number of items in the response.
+        """
+        params = kwargs.get("params", {})
+        params[self.size_param] = 1
+        params["fields"] = "id"
+
+        return self.get(path, params=params)[self.total_key]
+
+    def _calculate_epoch(self) -> str:
         """
         Calculate the epoch time (required for the signature)
 
         Returns:
-            int: The epoch time
+            str: The epoch time
         """
         return str(int(time.time() * 1000))
 

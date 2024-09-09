@@ -27,14 +27,27 @@ def get_all(lm, path, params=None):
     return response
 
 
+def count_devices(lm, params=None):
+    """
+    Count the total number of devices in LogicMonitor
+    """
+    return lm.count("device/devices", params=params)
+
+
 # instantiate the logicmonitor api client
 lm = api_client.api_logicmonitor(LM_COMPANY, LM_API_KEY, LM_ACCESS_KEY)
 
 # params
 params = {"size": 1000, "fields": "id,displayName"}
 
+# count the total number of devices
+total_devices = count_devices(lm, params)
+print(f"Total devices: {total_devices}")
+
 # get the first 1000 devices
-response = simple_get(lm, "/device/devices", params)
+response = simple_get(lm, "device/devices", params)
+print(response)
 
 # get all devices
-all_devices = get_all(lm, "/device/devices", params)
+all_devices = get_all(lm, "device/devices", params)
+print(all_devices)

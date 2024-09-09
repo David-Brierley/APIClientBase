@@ -298,3 +298,63 @@ class TestLogicMonitorClient:
         mock_common_get.assert_called_once_with("/test-path")
         # AND: Check that the response is what we mocked
         assert response == {"status": "success"}
+
+    @patch.object(LogicMonitorClient, "get")
+    def test_count_method_calls_get(self, mock_get):
+        # GIVEN: Setup the LogicMonitorClient instance
+        mock_get.return_value = {"total": 10}
+        pylogicmonitor = LogicMonitorClient(
+            company="testcompany", access_id="testid", api_key="testkey"
+        )
+
+        # WHEN: Call the count method
+        count = pylogicmonitor.count("/test-path")
+
+        # THEN: Ensure the get method is called with the correct arguments
+        mock_get.assert_called_once_with(
+            "/test-path", params={"fields": "id", "size": 1}
+        )
+        # AND: Check that the count is what we mocked
+        assert count == 10
+
+    @patch.object(LogicMonitorClient, "get")
+    def test_count_method_calls_get_and_overrides_params_size_and_field(self, mock_get):
+        params = {"size": 1000, "fields": "id,displayName"}
+
+        # GIVEN: Setup the LogicMonitorClient instance
+        mock_get.return_value = {"total": 10}
+        pylogicmonitor = LogicMonitorClient(
+            company="testcompany", access_id="testid", api_key="testkey"
+        )
+
+        # WHEN: Call the count method
+        count = pylogicmonitor.count("/test-path", params=params)
+
+        # THEN: Ensure the get method is called with the correct arguments, size should be 1 and fields should be id regardless of the params passed
+        mock_get.assert_called_once_with(
+            "/test-path", params={"fields": "id", "size": 1}
+        )
+        # AND: Check that the count is what we mocked
+        assert count == 10
+
+    @patch.object(LogicMonitorClient, "get")
+    def test_count_method_calls_get_and_preserves_additional_params(self, mock_get):
+
+        # GIVEN: Setup the LogicMonitorClient instance
+        mock_get.return_value = {"total": 10}
+        pylogicmonitor = LogicMonitorClient(
+            company="testcompany", access_id="testid", api_key="testkey"
+        )
+
+        # GIVEN: Additional params
+        params = {"size": 1000, "fields": "id,displayName", "filter": "name:test"}
+
+        # WHEN: Call the count method
+        count = pylogicmonitor.count("/test-path", params=params)
+
+        # THEN: Ensure the get method is called with the correct arguments, extra params should be preserved
+        mock_get.assert_called_once_with(
+            "/test-path", params={"fields": "id", "size": 1, "filter": "name:test"}
+        )
+        # AND: Check that the count is what we mocked
+        assert count == 10
